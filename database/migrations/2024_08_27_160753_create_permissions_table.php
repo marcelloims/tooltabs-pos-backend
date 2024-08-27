@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permissions', function (Blueprint $table) {
-            $table->id("Id");
-            $table->unsignedBigInteger("DepartmentPerPositionId");
-            $table->boolean('Added')->nullable();
-            $table->boolean('Edited')->nullable();
-            $table->boolean('Deleted')->nullable();
-            $table->boolean('Viewed')->nullable();
-            $table->string('CreatedBy');
-            $table->string('UpdatedBy');
-            $table->string('DeletedBy');
+            $table->id();
+            $table->unsignedBigInteger("department_per_position_id");
+            $table->boolean('added')->nullable();
+            $table->boolean('edited')->nullable();
+            $table->boolean('deleted')->nullable();
+            $table->boolean('viewed')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

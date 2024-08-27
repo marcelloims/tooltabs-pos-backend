@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permission_per_menus', function (Blueprint $table) {
-            $table->id("Id");
-            $table->unsignedBigInteger("PermissionId");
-            $table->unsignedBigInteger("MenuId");
-            $table->string('CreatedBy');
-            $table->string('UpdatedBy');
-            $table->string('DeletedBy');
+            $table->id();
+            $table->unsignedBigInteger("permission_id");
+            $table->unsignedBigInteger("menu_id");
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

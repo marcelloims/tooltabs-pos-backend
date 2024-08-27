@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('department_per_positions', function (Blueprint $table) {
-            $table->id("Id");
-            $table->unsignedBigInteger("OfficeId");
-            $table->unsignedBigInteger("DepartmentId");
-            $table->unsignedBigInteger("PositionId");
-            $table->string('CreatedBy');
-            $table->string('UpdatedBy');
-            $table->string('DeletedBy');
+            $table->id();
+            $table->unsignedBigInteger("office_id");
+            $table->unsignedBigInteger("department_id");
+            $table->unsignedBigInteger("position_id");
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

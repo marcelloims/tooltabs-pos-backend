@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('offices', function (Blueprint $table) {
-            $table->id("Id");
-            $table->string("Code");
-            $table->string("Name");
-            $table->string("Email");
-            $table->string("Phone");
-            $table->string("Address");
-            $table->string('NpwpNo')->nullable();
-            $table->string('CreatedBy');
-            $table->string('UpdatedBy');
-            $table->string('DeletedBy');
+            $table->id();
+            $table->string("code");
+            $table->string("name");
+            $table->string("email");
+            $table->string("phone");
+            $table->string("address");
+            $table->string('npwp_no')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->string('deleted_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
