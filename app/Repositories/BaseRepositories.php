@@ -2,17 +2,19 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\DB;
+
 class BaseRepositories {
 
     public function getAll(){
 
     }
 
-    public function store(){
-
+    public function store($table, $data){
+        return DB::table($table)->insert($data);
     }
 
-    public function edit(){
+    public function getById(){
 
     }
 
