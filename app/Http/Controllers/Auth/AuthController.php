@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Services\Auth\AuthService;
 use Illuminate\Http\Request;
 use Auht;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -27,5 +29,17 @@ class AuthController extends Controller
         $response   = $this->authService->login($request);
 
         return response()->json($response);
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+        return response()->json([
+            "code"      => Response::HTTP_OK,
+            "message"   => "You have been logged out!"
+        ]);
+    }
+
+    public function profile(){
+        return response()->json(Auth::user());
     }
 }
