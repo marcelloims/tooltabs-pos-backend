@@ -14,8 +14,8 @@ class BaseRepositories {
         return DB::table($table)->insert($data);
     }
 
-    public function getById(){
-
+    public function getById($tabel, $where){
+        return DB::table($tabel)->where($where)->first();
     }
 
     public function update(){

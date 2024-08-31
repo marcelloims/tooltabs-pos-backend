@@ -2,8 +2,10 @@
 
 namespace App\Repositories\Auth;
 
+use App\Models\User;
 use App\Repositories\BaseRepositories;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthRepository extends BaseRepositories {
 
@@ -11,6 +13,15 @@ class AuthRepository extends BaseRepositories {
         $data = array_merge($validator->validated(), $anotherRequest, $this->auditableInsert());
 
         return BaseRepositories::store('users', $data);
+    }
+
+    public function getUserByEmailPassword($email, $password)
+    {
+        $data = User::select('email', 'password')
+        ->where('email', $email)
+        ->first();
+
+        return Hash::check($password, $data->password);
     }
 
     public function audiTableInsert()
