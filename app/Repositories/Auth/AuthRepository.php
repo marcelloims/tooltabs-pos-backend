@@ -17,11 +17,16 @@ class AuthRepository extends BaseRepositories {
 
     public function getUserByEmailPassword($email, $password)
     {
-        $data = User::select('email', 'password')
+        $user = User::select('email', 'password')
         ->where('email', $email)
         ->first();
 
-        return Hash::check($password, $data->password);
+        if ($user) {
+            return Hash::check($password, $user->password);
+        }else{
+            return false;
+        }
+
     }
 
     public function audiTableInsert()
