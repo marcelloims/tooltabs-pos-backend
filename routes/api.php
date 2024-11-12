@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Menu\MenuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($route){
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'menu'], function($route){
+    Route::get('/fetch/{param}', [MenuController::class, 'getMenu']);
 });
