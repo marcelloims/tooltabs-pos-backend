@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Menu\MenuController;
+use App\Http\Controllers\Office\OfficeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +21,20 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($route){
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/profile', [AuthController::class, 'profile']);
-});
+Route::group(['middleware' => 'api'], function(){
+    Route::prefix('auth')->group(function () {
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/profile', [AuthController::class, 'profile']);
+    });
 
-Route::group(['middleware' => 'api', 'prefix' => 'menu'], function($route){
-    Route::get('/fetch/{param}', [MenuController::class, 'getMenu']);
+
+    Route::prefix('menu')->group(function () {
+        Route::get('/fetch/{param}', [MenuController::class, 'getMenu']);
+    });
+
+    Route::prefix('office')->group(function () {
+        Route::post('/store', [OfficeController::class, 'store']);
+    });
 });
