@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\DB;
 
 class BaseRepositories {
 
-    public function getAll(){
-
+    public function getAll($table){
+        return DB::table($table)->get();
     }
 
     public function store($table, $data){
