@@ -4,13 +4,21 @@ namespace App\Repositories\Auth;
 
 use App\Models\User;
 use App\Repositories\BaseRepositories;
+use App\Services\BaseService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class AuthRepository extends BaseRepositories {
+class AuthRepository extends BaseRepositories
+{
+    protected $baseService;
+
+    public function __construct(BaseService $_baseService)
+    {
+        $this->baseService = $_baseService;
+    }
 
     public function register($validator, $anotherRequest){
-        $data = array_merge($validator->validated(), $anotherRequest, $this->auditableInsert());
+        $data = array_merge($validator->validated(), $anotherRequest, $this->baseService->auditableInsert());
 
         return BaseRepositories::store('users', $data);
     }
@@ -27,30 +35,5 @@ class AuthRepository extends BaseRepositories {
             return false;
         }
 
-    }
-
-    public function audiTableInsert()
-    {
-        return [
-            'created_by'        => "test@email.com",
-            'updated_by'        => "test@email.com",
-            'created_at'        => date('Y-m-d H:i:s'),
-            'updated_at'        => date('Y-m-d H:i:s'),
-        ];
-    }
-
-    public function audiTableUpdate()
-    {
-        return [
-            'updated_by'        => "test@email.com",
-            'updated_at'        => date('Y-m-d H:i:s'),
-        ];
-    }
-
-    public function audiTableDelete()
-    {
-        return [
-            'deleted_by'        => "test@email.com"
-        ];
     }
 }
