@@ -19,6 +19,14 @@ class OfficeController extends Controller
         $this->baseService      = $_baseService;
     }
 
+    public function fetch(Request $request)
+    {
+        // return $request->sorting[0];
+        $response   = $this->officeService->fetch($request);
+
+        return response()->json($response, $response['code']);
+    }
+
     public function store(Request $request)
     {
         $response   = $this->officeService->save($request);

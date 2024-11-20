@@ -18,7 +18,7 @@ class AuthRepository extends BaseRepositories
     }
 
     public function register($validator, $anotherRequest){
-        $data = array_merge($validator->validated(), $anotherRequest, $this->baseService->auditableInsert());
+        $data = array_merge($validator->validated(), $anotherRequest, $this->baseService->auditableInsert(null));
 
         return BaseRepositories::store('users', $data);
     }

@@ -35,6 +35,7 @@ Route::group(['middleware' => 'api'], function(){
     });
 
     Route::prefix('office')->group(function () {
+        Route::get('/fetch', [OfficeController::class, 'fetch']);
         Route::post('/store', [OfficeController::class, 'store']);
     });
 });

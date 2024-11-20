@@ -15,6 +15,25 @@ class OfficeService {
         $this->officeRepository = $_officeRepository;
     }
 
+    public function fetch($request)
+    {
+        $response   = $this->officeRepository->fetch($request);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        }else{
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "insert"
+            ];
+        }
+    }
+
     public function save($request){
         $validator  = Validator::make($request->all(),[
             'name'      => 'required|max:255',
