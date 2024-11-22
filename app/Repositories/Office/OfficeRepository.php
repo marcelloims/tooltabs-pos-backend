@@ -5,6 +5,7 @@ namespace App\Repositories\Office;
 use App\Models\Office;
 use App\Repositories\BaseRepositories;
 use App\Services\BaseService;
+use Faker\Provider\Base;
 
 class OfficeRepository extends BaseRepositories
 {
@@ -13,6 +14,15 @@ class OfficeRepository extends BaseRepositories
     public function __construct(BaseService $_baseService,)
     {
         $this->baseService = $_baseService;
+    }
+
+    public function getData($id)
+    {
+        if ($id) {
+            return Office::where('id', $id)->get();
+        }else{
+            return Office::get();
+        }
     }
 
     public function fetch($request)
@@ -36,5 +46,17 @@ class OfficeRepository extends BaseRepositories
         $data = array_merge($validator->validated(), $this->baseService->auditableInsert($userEmail));
 
         return BaseRepositories::store('offices', $data);
+    }
+
+    public function updated($validator, $request)
+    {
+        $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
+
+        return BaseRepositories::update('offices', $data, $request->id);
+    }
+
+    public function destroyed($id)
+    {
+        return BaseRepositories::destroy('offices', $id);
     }
 }

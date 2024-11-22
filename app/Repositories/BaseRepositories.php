@@ -18,11 +18,11 @@ class BaseRepositories {
         return DB::table($tabel)->where($where)->first();
     }
 
-    public function update(){
-
+    public function update($table, $data, $id){
+        return DB::table($table)->where('id', $id)->update($data);
     }
 
-    public function destroy(){
-
+    public function destroy($table, $id){
+        return DB::table($table)->where('id', $id)->delete();
     }
 }
