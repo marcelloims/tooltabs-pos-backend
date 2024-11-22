@@ -21,7 +21,6 @@ class OfficeController extends Controller
 
     public function fetch(Request $request)
     {
-        // return $request->sorting[0];
         $response   = $this->officeService->fetch($request);
 
         return response()->json($response, $response['code']);
@@ -30,6 +29,25 @@ class OfficeController extends Controller
     public function store(Request $request)
     {
         $response   = $this->officeService->save($request);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function edit($id){
+        $response   = $this->officeService->getData($id);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function update(Request $request)
+    {
+        $response = $this->officeService->update($request);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function destroy($id){
+        $response   = $this->officeService->destory($id);
 
         return response()->json($response, $response['code']);
     }
