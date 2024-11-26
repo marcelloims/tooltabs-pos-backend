@@ -46,6 +46,13 @@ class OfficeController extends Controller
         return response()->json($response, $response['code']);
     }
 
+    public function detail($id)
+    {
+        $response = $this->officeService->getData($id);
+
+        return response()->json($response, $response['code']);
+    }
+
     public function destroy($id){
         $response   = $this->officeService->destory($id);
 
