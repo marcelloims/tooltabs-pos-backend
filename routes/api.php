@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccessRole\AccessRoleController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Menu\MenuController;
 use App\Http\Controllers\Office\OfficeController;
@@ -41,5 +42,9 @@ Route::group(['middleware' => 'api'], function(){
         Route::put('/update',[OfficeController::class, 'update']);
         Route::get('/detail/{param}', [OfficeController::class, 'detail']);
         Route::delete('/delete/{param}', [OfficeController::class, 'destroy']);
+    });
+
+    Route::prefix('access_role')->group(function () {
+        Route::get('/permission_per_menu/{param}', [AccessRoleController::class, 'permission_per_menu']);
     });
 });
