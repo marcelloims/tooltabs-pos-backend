@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Repositories\Office;
+namespace App\Repositories\Position;
 
-use App\Models\Office;
+use App\Models\Position;
 use App\Repositories\BaseRepositories;
 use App\Services\BaseService;
-use Faker\Provider\Base;
 
-class OfficeRepository extends BaseRepositories
+class PositionRepository extends BaseRepositories
 {
     protected $baseService;
 
@@ -19,15 +18,15 @@ class OfficeRepository extends BaseRepositories
     public function getData($id)
     {
         if ($id) {
-            return Office::where('id', $id)->get();
+            return Position::where('id', $id)->get();
         }else{
-            return Office::get();
+            return Position::get();
         }
     }
 
     public function fetch($request)
     {
-        $query = Office::select('id', $request->columns[0], $request->columns[1], $request->columns[2], $request->columns[3]);
+        $query = Position::select('id', $request->columns[0], $request->columns[1]);
         if ($request->search) {
           $query->where($request->columns[0], 'like', '%'.$request->search.'%')
             ->orWhere($request->columns[1], 'like', '%'.$request->search.'%')
@@ -43,20 +42,20 @@ class OfficeRepository extends BaseRepositories
     }
 
     public function save($validator, $userEmail){
-        $data = array_merge($validator->validated(), $this->baseService->auditableInsert($userEmail));
+        $data = array_merge(['tenant_id' => 1], $validator->validated(), $this->baseService->auditableInsert($userEmail));
 
-        return BaseRepositories::store('offices', $data);
+        return BaseRepositories::store('positions', $data);
     }
 
     public function updated($validator, $request)
     {
         $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
 
-        return BaseRepositories::update('offices', $data, $request->id);
+        return BaseRepositories::update('positions', $data, $request->id);
     }
 
     public function destroyed($id)
     {
-        return BaseRepositories::destroy('offices', $id);
+        return BaseRepositories::destroy('positions', $id);
     }
 }
