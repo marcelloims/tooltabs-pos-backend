@@ -16,6 +16,7 @@ class PermissionPerMenuRepository extends BaseRepositories
             'department_per_positions.office_id',
             'department_per_positions.department_id',
             'department_per_positions.position_id',
+            'permissions.grade_id',
             'permissions.write',
             'permissions.read')
         ->where('users.id', $userId)
