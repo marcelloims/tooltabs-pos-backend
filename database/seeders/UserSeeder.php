@@ -15,12 +15,11 @@ class UserSeeder extends Seeder
     {
         $user = [
             'department_per_position_id'    => 1,
-            'employee_id'                   => 1,
-            'nik_no'                        => 20240801,
-            'name'                          => "Marcell",
+            'employee_id'                   => 20240801,
+            'username'                      => "Marcell",
             'email'                         => "marcelloimanuel25@gmail.com",
             'email_verified_at'             => now(),
-            'password'                      => bcrypt('password'),
+            'password'                      => bcrypt('123456'),
             'activated'                     => 1,
         ];
 
