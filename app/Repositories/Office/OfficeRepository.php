@@ -11,7 +11,7 @@ class OfficeRepository extends BaseRepositories
 {
     protected $baseService;
 
-    public function __construct(BaseService $_baseService,)
+    public function __construct(BaseService $_baseService)
     {
         $this->baseService = $_baseService;
     }

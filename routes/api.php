@@ -60,5 +60,9 @@ Route::group(['middleware' => 'api'], function(){
 
     Route::prefix('department_per_position')->group(function () {
         Route::get('/fetch', [DepartmentPerPositionController::class, 'fetch']);
+        Route::post('/store', [DepartmentPerPositionController::class, 'store']);
+        Route::get('/edit/{param}', [DepartmentPerPositionController::class, 'edit']);
+        Route::put('/update', [DepartmentPerPositionController::class, 'update']);
+        Route::delete('/delete/{param}', [DepartmentPerPositionController::class, 'destroy']);
     });
 });
