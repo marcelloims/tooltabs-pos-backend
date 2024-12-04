@@ -31,4 +31,42 @@ class PermissionPerMenuService {
             ];
         }
     }
+
+    public function fetch($request)
+    {
+        $response   = $this->permissionPerMenuRepository->fetch($request);
+
+         if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        }else{
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
+    public function getMenu()
+    {
+        $response   = $this->permissionPerMenuRepository->getMenu();
+
+         if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        }else{
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
 }

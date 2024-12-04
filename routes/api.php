@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccessRole\AccessRoleController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DepartmentPerPosition\DepartmentPerPositionController;
 use App\Http\Controllers\Menu\MenuController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\Position\PositionController;
@@ -57,4 +58,11 @@ Route::group(['middleware' => 'api'], function(){
         Route::delete('/delete/{param}', [PositionController::class, 'destroy']);
     });
 
+    Route::prefix('department_per_position')->group(function () {
+        Route::get('/fetch', [DepartmentPerPositionController::class, 'fetch']);
+        Route::post('/store', [DepartmentPerPositionController::class, 'store']);
+        Route::get('/edit/{param}', [DepartmentPerPositionController::class, 'edit']);
+        Route::put('/update', [DepartmentPerPositionController::class, 'update']);
+        Route::delete('/delete/{param}', [DepartmentPerPositionController::class, 'destroy']);
+    });
 });
