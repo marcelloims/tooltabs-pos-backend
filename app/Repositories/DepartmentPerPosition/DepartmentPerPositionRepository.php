@@ -18,15 +18,15 @@ class DepartmentPerPositionRepository extends BaseRepositories
     public function getData($id)
     {
         if ($id) {
-            return DepartmentPerPosition::where('id', $id)->get();
+            return DepartmentPerPosition::select('id', 'office_id', 'department_id', 'position_id','grade_id')->where('id', $id)->first();
         }else{
-            return DepartmentPerPosition::get();
+            return DepartmentPerPosition::select('id', 'office_id', 'department_id', 'position_id','grade_id')->get();
         }
     }
 
     public function fetch($request)
     {
-        $query = DepartmentPerPosition::select('department_per_positions.id', $request->columns[0], $request->columns[1], $request->columns[2], $request->columns[3], 'departments.name as ' . $request->columns[4], 'positions.name as ' . $request->columns[5], 'grades.level as ' . $request->columns[6])
+        $query = DepartmentPerPosition::select('department_per_positions.id', 'departments.name as ' . $request->columns[0], 'positions.name as ' . $request->columns[1], 'grades.level as ' . $request->columns[2])
         ->join('departments', 'department_per_positions.department_id', '=', 'departments.id')
         ->join('positions', 'department_per_positions.position_id', '=', 'positions.id')
         ->join('grades', 'department_per_positions.grade_id', '=', 'grades.id');

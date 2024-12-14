@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Position;
+namespace App\Repositories\Department;
 
-use App\Models\Position;
+use App\Models\Department;
 use App\Repositories\BaseRepositories;
 use App\Services\BaseService;
 
-class PositionRepository extends BaseRepositories
+class DepartmentRepository extends BaseRepositories
 {
     protected $baseService;
 
@@ -18,15 +18,16 @@ class PositionRepository extends BaseRepositories
     public function getData($id)
     {
         if ($id) {
-            return Position::where('id', $id)->get();
+            return Department::where('id', $id)->get();
         }else{
-            return Position::select("id", "code", "name")->get();
+            return Department::select("id", "code", "name")
+            ->get();
         }
     }
 
     public function fetch($request)
     {
-        $query = Position::select('id', $request->columns[0], $request->columns[1]);
+        $query = Department::select('id', $request->columns[0], $request->columns[1]);
         if ($request->search) {
           $query->where($request->columns[0], 'like', '%'.$request->search.'%')
             ->orWhere($request->columns[1], 'like', '%'.$request->search.'%');
@@ -42,18 +43,18 @@ class PositionRepository extends BaseRepositories
     public function save($validator, $userEmail){
         $data = array_merge(['tenant_id' => 1], $validator->validated(), $this->baseService->auditableInsert($userEmail));
 
-        return BaseRepositories::store('positions', $data);
+        return BaseRepositories::store('Departments', $data);
     }
 
     public function updated($validator, $request)
     {
         $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
 
-        return BaseRepositories::update('positions', $data, $request->id);
+        return BaseRepositories::update('Departments', $data, $request->id);
     }
 
     public function destroyed($id)
     {
-        return BaseRepositories::destroy('positions', $id);
+        return BaseRepositories::destroy('Departments', $id);
     }
 }
