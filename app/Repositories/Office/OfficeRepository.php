@@ -21,7 +21,7 @@ class OfficeRepository extends BaseRepositories
         if ($id) {
             return Office::where('id', $id)->get();
         }else{
-            return Office::get();
+            return Office::select('id', 'code')->get();
         }
     }
 

@@ -1,23 +1,42 @@
 <?php
 
-namespace App\Services\DepartmentPerPosition;
+namespace App\Services\Department;
 
-use App\Repositories\DepartmentPerPosition\DepartmentPerPositionRepository;
+use App\Repositories\Department\DepartmentRepository;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class DepartmentPerPositionService
+class DepartmentService
 {
-    protected $departmentPerPositionRepository;
+    protected $departmentRepository;
 
-    public function __construct(DepartmentPerPositionRepository $_departmentPerPositionRepository)
+    public function __construct(DepartmentRepository $_departmentRepository)
     {
-        $this->departmentPerPositionRepository = $_departmentPerPositionRepository;
+        $this->departmentRepository = $_departmentRepository;
     }
 
     public function fetch($request)
     {
-        $response   = $this->departmentPerPositionRepository->fetch($request);
+        $response   = $this->departmentRepository->fetch($request);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        }else{
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
+    public function getAll()
+    {
+        $response   = $this->departmentRepository->getData($id = null);
 
         if ($response == true) {
             return [
@@ -36,15 +55,8 @@ class DepartmentPerPositionService
 
     public function save($request){
         $validator  = Validator::make($request->all(),[
-            'office_id'     => 'required|max:255',
-            'department_id' => 'required|max:255',
-            'position_id'   => 'required|max:255',
-            'grade_id'      => 'required|max:255'
-        ],[
-            'office_id.required' => 'The office field is required',
-            'department_id.required' => 'The department field is required',
-            'position_id.required' => 'The position field is required',
-            'grade_id.required' => 'The grade field is required',
+            'code'      => 'required|max:255',
+            'name'      => 'required|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -55,7 +67,7 @@ class DepartmentPerPositionService
             ];
         }
 
-        $response = $this->departmentPerPositionRepository->save($validator, $request->userEmail);
+        $response = $this->departmentRepository->save($validator, $request->userEmail);
 
         if ($response == true) {
             return [
@@ -74,7 +86,7 @@ class DepartmentPerPositionService
 
     public function getData($id)
     {
-        $response   = $this->departmentPerPositionRepository->getData($id);
+        $response   = $this->departmentRepository->getData($id);
 
         if ($response == true) {
             return [
@@ -91,13 +103,10 @@ class DepartmentPerPositionService
         }
     }
 
-    public function update($request)
-    {
+    public function update($request){
         $validator  = Validator::make($request->all(),[
-            'office_id'     => 'required|max:255',
-            'department_id' => 'required|max:255',
-            'position_id'   => 'required|max:255',
-            'grade_id'      => 'required|max:255'
+            'code'      => 'required|max:255',
+            'name'      => 'required|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -108,11 +117,11 @@ class DepartmentPerPositionService
             ];
         }
 
-        $response = $this->departmentPerPositionRepository->updated($validator, $request);
+        $response = $this->departmentRepository->updated($validator, $request);
 
         if ($response == true) {
             return [
-                "code"      => Response::HTTP_OK,
+                "code"      => Response::HTTP_CREATED,
                 "status"    => "success",
                 "message"   => "Data has been updated"
             ];
@@ -120,14 +129,14 @@ class DepartmentPerPositionService
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
-                "process"   => "update"
+                "process"   => "insert"
             ];
         }
     }
 
     public function destory($id)
     {
-        $response = $this->departmentPerPositionRepository->destroyed($id);
+        $response = $this->departmentRepository->destroyed($id);
 
         if ($response == true) {
             return [

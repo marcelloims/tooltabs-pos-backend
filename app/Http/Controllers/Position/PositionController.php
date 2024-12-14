@@ -22,6 +22,13 @@ class PositionController extends Controller
         return response()->json($response, $response['code']);
     }
 
+    public function getAll()
+    {
+        $response   = $this->positionService->getAll();
+
+        return response()->json($response, $response['code']);
+    }
+
     public function store(Request $request)
     {
         $response   = $this->positionService->save($request);

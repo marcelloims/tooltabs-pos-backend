@@ -34,6 +34,25 @@ class PositionService
         }
     }
 
+    public function getAll()
+    {
+        $response   = $this->positionRepository->getData($id = null);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        }else{
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
     public function save($request){
         $validator  = Validator::make($request->all(),[
             'code'      => 'required|max:255',

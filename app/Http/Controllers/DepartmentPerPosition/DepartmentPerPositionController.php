@@ -29,7 +29,8 @@ class DepartmentPerPositionController extends Controller
         return response()->json($response, $response['code']);
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $response   = $this->departmentPerPositionService->getData($id);
 
         return response()->json($response, $response['code']);

@@ -34,6 +34,25 @@ class OfficeService {
         }
     }
 
+    public function getAll()
+    {
+        $response   = $this->officeRepository->getData($id = null);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        }else{
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
     public function save($request){
         $validator  = Validator::make($request->all(),[
             'name'      => 'required|max:255',

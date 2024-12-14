@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('department_per_positions', function (Blueprint $table) {
-            $table->unsignedBigInteger('grade_id')->after('position_id')->nullable();
+        Schema::table('departments', function (Blueprint $table) {
+            $table->unsignedBigInteger('tenant_id')->after('id')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('department_per_positions', function (Blueprint $table) {
+        Schema::table('department', function (Blueprint $table) {
             //
         });
     }
