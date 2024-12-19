@@ -32,13 +32,9 @@ class DepartmentPerPositionRepository extends BaseRepositories
         ->join('grades', 'department_per_positions.grade_id', '=', 'grades.id');
 
         if ($request->search) {
-          $query->where($request->columns[0], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[1], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[2], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[3], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[4], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[5], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[6], 'like', '%'.$request->search.'%');
+          $query->where('departments.name', 'like', '%'.$request->search.'%')
+            ->orWhere("positions.name", 'like', '%'.$request->search.'%')
+            ->orWhere("grades.level", 'like', '%'.$request->search.'%');
         }
 
         if ($request->sorting) {
