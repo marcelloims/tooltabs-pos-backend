@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\AccessRole\AccessRoleController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Department\DepartmentController;
 use App\Http\Controllers\DepartmentPerPosition\DepartmentPerPositionController;
 use App\Http\Controllers\Grade\GradeController;
 use App\Http\Controllers\Menu\MenuController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\Position\PositionController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Type\TypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -80,5 +83,31 @@ Route::group(['middleware' => 'api'], function(){
         Route::get('/edit/{param}', [DepartmentPerPositionController::class, 'edit']);
         Route::put('/update', [DepartmentPerPositionController::class, 'update']);
         Route::delete('/delete/{param}', [DepartmentPerPositionController::class, 'destroy']);
+    });
+
+    Route::prefix('product')->group(function () {
+        Route::get('/fetch', [ProductController::class, 'fetch']);
+        Route::post('/store', [ProductController::class, 'store']);
+        Route::get('/edit/{param}', [ProductController::class, 'edit']);
+        Route::put('/update', [ProductController::class, 'update']);
+        Route::delete('/delete/{param}', [ProductController::class, 'destroy']);
+    });
+
+    Route::prefix('category')->group(function () {
+        Route::get('/getAll', [CategoryController::class, 'getAll']);
+        Route::get('/fetch', [CategoryController::class, 'fetch']);
+        Route::post('/store', [CategoryController::class, 'store']);
+        Route::get('/edit/{param}', [CategoryController::class, 'edit']);
+        Route::put('/update', [CategoryController::class, 'update']);
+        Route::delete('/delete/{param}', [CategoryController::class, 'destroy']);
+    });
+
+    Route::prefix('type')->group(function () {
+        Route::get('/getAll', [TypeController::class, 'getAll']);
+        Route::get('/fetch', [TypeController::class, 'fetch']);
+        Route::post('/store', [TypeController::class, 'store']);
+        Route::get('/edit/{param}', [TypeController::class, 'edit']);
+        Route::put('/update', [TypeController::class, 'update']);
+        Route::delete('/delete/{param}', [TypeController::class, 'destroy']);
     });
 });
