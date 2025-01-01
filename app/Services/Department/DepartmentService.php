@@ -129,7 +129,7 @@ class DepartmentService
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
-                "process"   => "insert"
+                "process"   => "update"
             ];
         }
     }
