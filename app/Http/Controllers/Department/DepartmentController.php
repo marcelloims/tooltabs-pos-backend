@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 class DepartmentController extends Controller
 {
     protected $departmentService;
-    protected $baseService;
 
     public function __construct(DepartmentService $_departmentService)
     {

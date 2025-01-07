@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Menu extends Model
+class Submenu extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function submenus(): HasMany
+    public function menu(): BelongsTo
     {
-        return $this->hasMany(Submenu::class);
+        return $this->belongsTo(Menu::class);
     }
 }
