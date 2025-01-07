@@ -39,6 +39,7 @@ Route::group(['middleware' => 'api'], function(){
 
     Route::prefix('menu')->group(function () {
         Route::get('/fetch/{param}', [MenuController::class, 'getMenu']);
+        Route::put('/update', [MenuController::class, 'update']);
     });
 
     Route::prefix('office')->group(function () {

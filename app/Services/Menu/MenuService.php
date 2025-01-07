@@ -32,4 +32,9 @@ class MenuService
             ];
         }
     }
+
+    public function update($request)
+    {
+        return $this->menuRepository->updated($request);
+    }
 }

@@ -21,4 +21,13 @@ class MenuController extends Controller
 
         return response()->json($response);
     }
+
+    public function update(Request $request)
+    {
+        $this->menuService->update($request);
+
+        $response   = $this->menuService->getMenu($request->department_per_position_id);
+
+        return response()->json($response, $response['code']);
+    }
 }
