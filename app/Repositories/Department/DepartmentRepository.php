@@ -43,18 +43,18 @@ class DepartmentRepository extends BaseRepositories
     public function save($validator, $userEmail){
         $data = array_merge(['tenant_id' => 1], $validator->validated(), $this->baseService->auditableInsert($userEmail));
 
-        return BaseRepositories::store('Departments', $data);
+        return BaseRepositories::store('departments', $data);
     }
 
     public function updated($validator, $request)
     {
         $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
 
-        return BaseRepositories::update('Departments', $data, $request->id);
+        return BaseRepositories::update('departments', $data, $request->id);
     }
 
     public function destroyed($id)
     {
-        return BaseRepositories::destroy('Departments', $id);
+        return BaseRepositories::destroy('departments', $id);
     }
 }
