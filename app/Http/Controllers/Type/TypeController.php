@@ -21,4 +21,44 @@ class TypeController extends Controller
 
         return response()->json($response, $response['code']);
     }
+
+    public function fetch(Request $request)
+    {
+        $response   = $this->typeService->fetch($request);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function store(Request $request)
+    {
+        $response   = $this->typeService->save($request);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function edit($id){
+        $response   = $this->typeService->getData($id);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function update(Request $request)
+    {
+        $response = $this->typeService->update($request);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function detail($id)
+    {
+        $response = $this->typeService->getData($id);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function destroy($id){
+        $response   = $this->typeService->destory($id);
+
+        return response()->json($response, $response['code']);
+    }
 }
