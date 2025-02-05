@@ -9,6 +9,7 @@ use App\Http\Controllers\Grade\GradeController;
 use App\Http\Controllers\Menu\MenuController;
 use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\Position\PositionController;
+use App\Http\Controllers\ProdcutPerOffice\ProductPerOfficeController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Type\TypeController;
 use Illuminate\Support\Facades\Route;
@@ -87,11 +88,13 @@ Route::group(['middleware' => 'api'], function(){
     });
 
     Route::prefix('product')->group(function () {
+        Route::get('/getAll', [ProductController::class, 'getAll']);
         Route::get('/fetch', [ProductController::class, 'fetch']);
         Route::post('/store', [ProductController::class, 'store']);
         Route::get('/edit/{param}', [ProductController::class, 'edit']);
-        Route::put('/update', [ProductController::class, 'update']);
+        Route::post('/update', [ProductController::class, 'update']);
         Route::delete('/delete/{param}', [ProductController::class, 'destroy']);
+        Route::get('/getImage/{param}', [ProductController::class, 'getImage']);
     });
 
     Route::prefix('category')->group(function () {
@@ -110,5 +113,14 @@ Route::group(['middleware' => 'api'], function(){
         Route::get('/edit/{param}', [TypeController::class, 'edit']);
         Route::put('/update', [TypeController::class, 'update']);
         Route::delete('/delete/{param}', [TypeController::class, 'destroy']);
+    });
+
+    Route::prefix('product_per_office')->group(function () {
+        Route::get('/getAll', [ProductPerOfficeController::class, 'getAll']);
+        Route::get('/fetch', [ProductPerOfficeController::class, 'fetch']);
+        Route::post('/store', [ProductPerOfficeController::class, 'store']);
+        Route::get('/edit/{param}', [ProductPerOfficeController::class, 'edit']);
+        Route::put('/update', [ProductPerOfficeController::class, 'update']);
+        Route::delete('/delete/{param}', [ProductPerOfficeController::class, 'destroy']);
     });
 });

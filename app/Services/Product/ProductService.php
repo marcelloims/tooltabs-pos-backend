@@ -15,6 +15,25 @@ class ProductService
         $this->productRepository = $_productRepository;
     }
 
+    public function getAll()
+    {
+        $response   = $this->productRepository->getData($id = null);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        }else{
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
     public function fetch($request)
     {
         $response   = $this->productRepository->fetch($request);
@@ -41,7 +60,7 @@ class ProductService
             'pcode'         => 'required|max:255',
             'name'          => 'required|max:255',
             'unit'          => 'required|max:255',
-            'brand_code'    => 'required|max:255',
+            // 'brand_code'    => 'required|max:255',
             'hight_cm'      => 'required|max:255',
             'width_cm'      => 'required|max:255',
             'long_cm'       => 'required|max:255',
@@ -61,7 +80,7 @@ class ProductService
             ];
         }
 
-        $response = $this->productRepository->save($validator, $request->userEmail);
+        $response = $this->productRepository->save($validator, $request);
 
         if ($response == true) {
             return [
@@ -155,6 +174,25 @@ class ProductService
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "process"   => "delete"
+            ];
+        }
+    }
+
+    public function getImage($id)
+    {
+        $response = $this->productRepository->getImage($id);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        }else{
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "getImage"
             ];
         }
     }
