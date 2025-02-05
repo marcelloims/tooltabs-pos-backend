@@ -2,9 +2,12 @@
 
 namespace App\Repositories\Product;
 
+use App\Models\Photo;
 use App\Models\Product;
 use App\Repositories\BaseRepositories;
 use App\Services\BaseService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductRepository extends BaseRepositories
 {
@@ -18,9 +21,11 @@ class ProductRepository extends BaseRepositories
     public function getData($id)
     {
         if ($id) {
-            return Product::where('id', $id)->get();
+            return Product::join('photos', 'products.id', "=", "photos.product_id")
+            ->select("products.*", "image1", "image2", "image3")
+            ->where('products.id', $id)->first();
         }else{
-            return Product::select("id", "code", "name")->get();
+            return Product::select("id", "pcode", "name")->get();
         }
     }
 
@@ -41,21 +46,97 @@ class ProductRepository extends BaseRepositories
         return $query->paginate($request->perPage);
     }
 
-    public function save($validator, $userEmail){
-        $data = array_merge($validator->validated(), $this->baseService->auditableInsert($userEmail));
+    public function save($validator, $request)
+    {
+        $data = array_merge(
+            $validator->validated(),
+            ["brand_code" => $request->brand_code],
+            $this->baseService->auditableInsert($request->userEmail)
+        );
 
-        return BaseRepositories::store('products', $data);
+        $image1 = $request->image1 == "undefined" ? null : $request->image1->getClientOriginalName();
+        $image2 = $request->image2 == "undefined" ? null : $request->image2->getClientOriginalName();
+        $image3 = $request->image3 == "undefined" ? null : $request->image3->getClientOriginalName();
+
+        $request->image1 == "undefined" ? null : Storage::disk('product')->put($image1, file_get_contents($request->image1));
+        $request->image2 == "undefined" ? null : Storage::disk('product')->put($image2, file_get_contents($request->image2));
+        $request->image3 == "undefined" ? null : Storage::disk('product')->put($image3, file_get_contents($request->image3));
+
+        $productId = DB::table('products')->insertGetId($data);
+
+        $photo = [
+            'product_id'    => $productId,
+            'image1'        => $image1,
+            'image2'        => $image2,
+            'image3'        => $image3
+        ];
+
+        BaseRepositories::store('photos', $photo);
+
+        return true;
     }
 
     public function updated($validator, $request)
     {
-        $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
+        $imageProduct = Photo::where('product_id', $request->id)->first();
 
+        $valImage1 = [];
+        $valImage2 = [];
+        $valImage3 = [];
+
+        if ($request->image1 && $imageProduct->image1 != $request->image1) {
+            Storage::delete($imageProduct->image1);
+            Storage::disk('product')->put($request->image1->getClientOriginalName(), file_get_contents($request->image1));
+
+            $valImage1 = $request->image1->getClientOriginalName();
+        }
+
+        if ($request->image2 && $imageProduct->image2 != $request->image2) {
+            Storage::delete($imageProduct->image2);
+            Storage::disk('product')->put($request->image2->getClientOriginalName(), file_get_contents($request->image2));
+
+            $valImage2 = $request->image2->getClientOriginalName();
+        }
+
+        if ($request->image3 && $imageProduct->image3 != $request->image3) {
+            Storage::delete($imageProduct->image3);
+            Storage::disk('product')->put($request->image3->getClientOriginalName(), file_get_contents($request->image3));
+
+            $valImage3 = $request->image3->getClientOriginalName();
+        }
+
+        $photos = [
+            "image1" => $valImage1,
+            "image2" => $valImage2,
+            "image3" => $valImage3
+        ];
+
+        Photo::where('product_id', $request->id)->update($photos);
+
+        $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
         return BaseRepositories::update('products', $data, $request->id);
     }
 
     public function destroyed($id)
     {
+        Photo::where('product_id', $id)->delete();
         return BaseRepositories::destroy('products', $id);
+    }
+
+    public function getImage($id)
+    {
+        $imageProduct = Photo::where('product_id', $id)->first();
+
+        $image1Url = asset('product/'.$imageProduct->image1);
+        $image2Url = asset('product/'.$imageProduct->image2);
+        $image3Url = asset('product/'.$imageProduct->image3);
+
+        $imageUrl = [
+            "image1" => $image1Url,
+            "image2" => $image2Url,
+            "image3" => $image3Url,
+        ];
+
+        return $imageUrl;
     }
 }

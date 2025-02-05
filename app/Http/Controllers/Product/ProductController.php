@@ -15,6 +15,13 @@ class ProductController extends Controller
         $this->productService = $_productService;
     }
 
+    public function getAll()
+    {
+        $response   = $this->productService->getAll();
+
+        return response()->json($response, $response['code']);
+    }
+
     public function fetch(Request $request)
     {
         $response   = $this->productService->fetch($request);
@@ -29,20 +36,30 @@ class ProductController extends Controller
         return response()->json($response, $response['code']);
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $response   = $this->productService->getData($id);
 
         return response()->json($response, $response['code']);
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $response   = $this->productService->update($request);
 
         return response()->json($response, $response['code']);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $response   = $this->productService->destory($id);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function getImage($id)
+    {
+        $response   = $this->productService->getImage($id);
 
         return response()->json($response, $response['code']);
     }
