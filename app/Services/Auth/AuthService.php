@@ -99,7 +99,7 @@ class AuthService {
             "token"         => $token,
             "token_type"    => "bearer",
             "expired"       => Auth::factory()->getTTL() . " minutes",
-            "user"          => Auth::user()
+            "user"          => $this->authRepository->getUser()
         ];
     }
 }

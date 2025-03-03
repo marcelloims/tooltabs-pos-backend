@@ -36,4 +36,12 @@ class AuthRepository extends BaseRepositories
         }
 
     }
+
+    public function getUser()
+    {
+        return User::join('department_per_positions', 'department_per_positions.id', '=', 'users.department_per_position_id')
+        ->where("users.department_per_position_id", Auth::user()->department_per_position_id)
+        ->select("users.*", "department_per_positions.office_id")
+        ->first();
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\DepartmentPerPosition\DepartmentPerPositionController;
 use App\Http\Controllers\Grade\GradeController;
 use App\Http\Controllers\Menu\MenuController;
 use App\Http\Controllers\Office\OfficeController;
+use App\Http\Controllers\Pos\PosContorller;
 use App\Http\Controllers\Position\PositionController;
 use App\Http\Controllers\ProdcutPerOffice\ProductPerOfficeController;
 use App\Http\Controllers\Product\ProductController;
@@ -123,4 +124,9 @@ Route::group(['middleware' => 'api'], function(){
         Route::put('/update', [ProductPerOfficeController::class, 'update']);
         Route::delete('/delete/{param}', [ProductPerOfficeController::class, 'destroy']);
     });
+});
+
+Route::prefix('pos')->group(function () {
+    Route::post('/getFood', [PosContorller::class, 'getFood']);
+    Route::get('/getFood/{param}', [PosContorller::class, 'getDetailFood']);
 });
