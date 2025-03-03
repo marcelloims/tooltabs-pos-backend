@@ -89,6 +89,8 @@ class ProductRepository extends BaseRepositories
             Storage::disk('product')->put($request->image1->getClientOriginalName(), file_get_contents($request->image1));
 
             $valImage1 = $request->image1->getClientOriginalName();
+        }else{
+            $valImage1 = $imageProduct->image1;
         }
 
         if ($request->image2 && $imageProduct->image2 != $request->image2) {
@@ -96,14 +98,20 @@ class ProductRepository extends BaseRepositories
             Storage::disk('product')->put($request->image2->getClientOriginalName(), file_get_contents($request->image2));
 
             $valImage2 = $request->image2->getClientOriginalName();
+        }else{
+            $valImage2 = $imageProduct->image2;
         }
+
 
         if ($request->image3 && $imageProduct->image3 != $request->image3) {
             Storage::delete($imageProduct->image3);
             Storage::disk('product')->put($request->image3->getClientOriginalName(), file_get_contents($request->image3));
 
             $valImage3 = $request->image3->getClientOriginalName();
+        }else{
+            $valImage3 = $imageProduct->image3;
         }
+
 
         $photos = [
             "image1" => $valImage1,
