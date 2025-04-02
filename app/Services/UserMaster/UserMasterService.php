@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Services\Product;
+namespace App\Services\UserMaster;
 
-use App\Repositories\Product\ProductRepository;
+use App\Repositories\UserMaster\UserMasterRepository;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductService
+class UserMasterService
 {
-    protected $productRepository;
+    protected $userMasterRepository;
 
-    public function __construct(ProductRepository $_productRepository)
+    public function __construct(UserMasterRepository $_userMasterRepository)
     {
-        $this->productRepository = $_productRepository;
+        $this->userMasterRepository = $_userMasterRepository;
     }
 
     public function getAll()
     {
-        $response   = $this->productRepository->getData($id = null);
+        $response   = $this->userMasterRepository->getData($id = null);
 
         if ($response == true) {
             return [
@@ -36,7 +36,7 @@ class ProductService
 
     public function fetch($request)
     {
-        $response   = $this->productRepository->fetch($request);
+        $response   = $this->userMasterRepository->fetch($request);
 
         if ($response == true) {
             return [
@@ -56,17 +56,7 @@ class ProductService
     public function save($request)
     {
         $validator  = Validator::make($request->all(), [
-            'category_id'   => 'required|max:255',
-            'type_id'       => 'required|max:255',
-            'pcode'         => 'required|max:255',
-            'name'          => 'required|max:255',
-            'description'   => 'required|max:255',
-            'unit'          => 'required|max:255',
-            'status'        => 'required|max:255',
-        ], [
-            'category_id.required' => 'The category field is required',
-            'type_id.required' => 'The type field is required',
-            'brand_code.required' => 'The brand code field is required',
+            'name'      => 'required|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -77,7 +67,7 @@ class ProductService
             ];
         }
 
-        $response = $this->productRepository->save($validator, $request);
+        $response = $this->userMasterRepository->save($validator, $request->userEmail);
 
         if ($response == true) {
             return [
@@ -96,7 +86,7 @@ class ProductService
 
     public function getData($id)
     {
-        $response   = $this->productRepository->getData($id);
+        $response   = $this->userMasterRepository->getData($id);
 
         if ($response == true) {
             return [
@@ -116,17 +106,7 @@ class ProductService
     public function update($request)
     {
         $validator  = Validator::make($request->all(), [
-            'category_id'   => 'required|max:255',
-            'type_id'       => 'required|max:255',
-            'pcode'         => 'required|max:255',
-            'name'          => 'required|max:255',
-            'description'   => 'required|max:255',
-            'unit'          => 'required|max:255',
-            'status'        => 'required|max:255',
-        ], [
-            'category_id.required' => 'The category field is required',
-            'type_id.required' => 'The type field is required',
-            'brand_code.required' => 'The brand code field is required',
+            'name'      => 'required|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -137,7 +117,7 @@ class ProductService
             ];
         }
 
-        $response = $this->productRepository->updated($validator, $request);
+        $response = $this->userMasterRepository->updated($validator, $request);
 
         if ($response == true) {
             return [
@@ -156,7 +136,7 @@ class ProductService
 
     public function destory($id)
     {
-        $response = $this->productRepository->destroyed($id);
+        $response = $this->userMasterRepository->destroyed($id);
 
         if ($response == true) {
             return [
@@ -168,25 +148,6 @@ class ProductService
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "process"   => "delete"
-            ];
-        }
-    }
-
-    public function getImage($id)
-    {
-        $response = $this->productRepository->getImage($id);
-
-        if ($response == true) {
-            return [
-                "code"      => Response::HTTP_OK,
-                "status"    => "success",
-                "response"  => $response
-            ];
-        } else {
-            return [
-                "code"      => Response::HTTP_BAD_REQUEST,
-                "request"   => false,
-                "process"   => "getImage"
             ];
         }
     }

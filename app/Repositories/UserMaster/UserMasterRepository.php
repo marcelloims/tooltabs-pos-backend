@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Repositories\UserMaster;
 
-use App\Models\Category;
+use App\Models\Employee;
 use App\Repositories\BaseRepositories;
 use App\Services\BaseService;
 
-class CategoryRepository extends BaseRepositories
+class UserMasterRepository extends BaseRepositories
 {
     protected $baseService;
 
@@ -18,16 +18,26 @@ class CategoryRepository extends BaseRepositories
     public function getData($id)
     {
         if ($id) {
-            return Category::where('id', $id)->get();
+            return Employee::where('id', $id)->get();
         } else {
-            return Category::select("id", "name")
+            return Employee::select("id", "name")
                 ->get();
         }
     }
 
     public function fetch($request)
     {
-        $query = Category::select('id', $request->columns[0]);
+        $query = Employee::join('users', 'employees.id', '=', 'users.employee_id')
+            ->select(
+                'users.id',
+                $request->columns[0],
+                'email',
+                $request->columns[1],
+                'telephone',
+                $request->columns[2],
+                'activated',
+                $request->columns[3],
+            );
         if ($request->search) {
             $query->where($request->columns[0], 'like', '%' . $request->search . '%');
         }
@@ -43,18 +53,18 @@ class CategoryRepository extends BaseRepositories
     {
         $data = array_merge($validator->validated(), $this->baseService->auditableInsert($userEmail));
 
-        return BaseRepositories::store('categories', $data);
+        return BaseRepositories::store('types', $data);
     }
 
     public function updated($validator, $request)
     {
         $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
 
-        return BaseRepositories::update('categories', $data, $request->id);
+        return BaseRepositories::update('types', $data, $request->id);
     }
 
     public function destroyed($id)
     {
-        return BaseRepositories::destroy('categories', $id);
+        return BaseRepositories::destroy('types', $id);
     }
 }
