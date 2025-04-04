@@ -17,7 +17,7 @@ class DepartmentPerPositionController extends Controller
 
     public function fetch(Request $request)
     {
-       $response   = $this->departmentPerPositionService->fetch($request);
+        $response   = $this->departmentPerPositionService->fetch($request);
 
         return response()->json($response, $response['code']);
     }
@@ -43,7 +43,8 @@ class DepartmentPerPositionController extends Controller
         return response()->json($response, $response['code']);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $response   = $this->departmentPerPositionService->destory($id);
 
         return response()->json($response, $response['code']);

@@ -17,7 +17,8 @@ class AuthRepository extends BaseRepositories
         $this->baseService = $_baseService;
     }
 
-    public function register($validator, $anotherRequest){
+    public function register($validator, $anotherRequest)
+    {
         $data = array_merge($validator->validated(), $anotherRequest, $this->baseService->auditableInsert(null));
 
         return BaseRepositories::store('users', $data);
@@ -26,22 +27,21 @@ class AuthRepository extends BaseRepositories
     public function getUserByEmailPassword($email, $password)
     {
         $user = User::select('email', 'password')
-        ->where('email', $email)
-        ->first();
+            ->where('email', $email)
+            ->first();
 
         if ($user) {
             return Hash::check($password, $user->password);
-        }else{
+        } else {
             return false;
         }
-
     }
 
     public function getUser()
     {
         return User::join('department_per_positions', 'department_per_positions.id', '=', 'users.department_per_position_id')
-        ->where("users.department_per_position_id", Auth::user()->department_per_position_id)
-        ->select("users.*", "department_per_positions.office_id")
-        ->first();
+            ->where("users.department_per_position_id", Auth::user()->department_per_position_id)
+            ->select("users.*", "department_per_positions.tenant_id", "department_per_positions.office_id")
+            ->first();
     }
 }

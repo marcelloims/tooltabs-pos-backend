@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Services\Office;
+namespace App\Services\UserMaster;
 
-use App\Repositories\Office\OfficeRepository;
+use App\Repositories\UserMaster\UserMasterRepository;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class OfficeService
+class UserMasterService
 {
+    protected $userMasterRepository;
 
-    protected $officeRepository;
-
-    public function __construct(OfficeRepository $_officeRepository)
+    public function __construct(UserMasterRepository $_userMasterRepository)
     {
-        $this->officeRepository = $_officeRepository;
+        $this->userMasterRepository = $_userMasterRepository;
     }
 
-    public function fetch($request)
+    public function getAll()
     {
-        $response   = $this->officeRepository->fetch($request);
+        $response   = $this->userMasterRepository->getData($id = null);
 
         if ($response == true) {
             return [
@@ -35,9 +34,9 @@ class OfficeService
         }
     }
 
-    public function getAll()
+    public function fetch($request)
     {
-        $response   = $this->officeRepository->getData($id = null);
+        $response   = $this->userMasterRepository->fetch($request);
 
         if ($response == true) {
             return [
@@ -57,11 +56,7 @@ class OfficeService
     public function save($request)
     {
         $validator  = Validator::make($request->all(), [
-            'name'      => 'required|max:255',
-            'code'      => 'required|max:255',
-            'email'     => 'required|email|unique:users,email|max:255',
-            'phone'     => 'required|max:15',
-            'address'   => 'required'
+            'name'      => 'required|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -72,7 +67,7 @@ class OfficeService
             ];
         }
 
-        $response = $this->officeRepository->save($validator, ['tenant_id' => $request->userTenantId], $request->userEmail);
+        $response = $this->userMasterRepository->save($validator, $request->userEmail);
 
         if ($response == true) {
             return [
@@ -91,7 +86,7 @@ class OfficeService
 
     public function getData($id)
     {
-        $response   = $this->officeRepository->getData($id);
+        $response   = $this->userMasterRepository->getData($id);
 
         if ($response == true) {
             return [
@@ -111,11 +106,7 @@ class OfficeService
     public function update($request)
     {
         $validator  = Validator::make($request->all(), [
-            'name'      => 'required|max:255',
-            'code'      => 'required|max:255',
-            'email'     => 'required|email|unique:users,email|max:255',
-            'phone'     => 'required|max:15',
-            'address'   => 'required'
+            'name'      => 'required|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -126,11 +117,11 @@ class OfficeService
             ];
         }
 
-        $response = $this->officeRepository->updated($validator, $request);
+        $response = $this->userMasterRepository->updated($validator, $request);
 
         if ($response == true) {
             return [
-                "code"      => Response::HTTP_OK,
+                "code"      => Response::HTTP_CREATED,
                 "status"    => "success",
                 "message"   => "Data has been updated"
             ];
@@ -145,7 +136,7 @@ class OfficeService
 
     public function destory($id)
     {
-        $response = $this->officeRepository->destroyed($id);
+        $response = $this->userMasterRepository->destroyed($id);
 
         if ($response == true) {
             return [

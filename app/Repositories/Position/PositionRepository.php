@@ -19,7 +19,7 @@ class PositionRepository extends BaseRepositories
     {
         if ($id) {
             return Position::where('id', $id)->get();
-        }else{
+        } else {
             return Position::select("id", "code", "name")->get();
         }
     }
@@ -28,8 +28,8 @@ class PositionRepository extends BaseRepositories
     {
         $query = Position::select('id', $request->columns[0], $request->columns[1]);
         if ($request->search) {
-          $query->where($request->columns[0], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[1], 'like', '%'.$request->search.'%');
+            $query->where($request->columns[0], 'like', '%' . $request->search . '%')
+                ->orWhere($request->columns[1], 'like', '%' . $request->search . '%');
         }
 
         if ($request->sorting) {
@@ -39,8 +39,9 @@ class PositionRepository extends BaseRepositories
         return $query->paginate($request->perPage);
     }
 
-    public function save($validator, $userEmail){
-        $data = array_merge(['tenant_id' => 1], $validator->validated(), $this->baseService->auditableInsert($userEmail));
+    public function save($dataFilter, $validator, $userEmail)
+    {
+        $data = array_merge($dataFilter, $validator->validated(), $this->baseService->auditableInsert($userEmail));
 
         return BaseRepositories::store('positions', $data);
     }

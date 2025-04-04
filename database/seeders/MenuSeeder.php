@@ -15,71 +15,53 @@ class MenuSeeder extends Seeder
     {
         $menus = [
             [
-                'name'          => "Back To Dashboard",
-                'submenu'       => "",
-                'url'           => "",
-                'sequent'       => 100,
-                'icon'          => 'flaticon-381-time',
-                'created_by'    => 'Seeder',
-                'updated_by'    => 'Seeder',
-                'created_at'    => now(),
-                'updated_at'    => now()
+                "id" => 1,
+                "name" => "Back to Main",
+                "url" => "",
+                "sequent" => "299",
+                "expand" => "0",
+                "icon" => "flaticon-381-time",
             ],
             [
-                'name'          => "Configuration",
-                'submenu'       => "",
-                'url'           => "",
-                'sequent'       => 200,
-                'icon'          => 'flaticon-381-stopwatch',
-                'created_by'    => 'Seeder',
-                'updated_by'    => 'Seeder',
-                'created_at'    => now(),
-                'updated_at'    => now()
+                "id" => 2,
+                "name" => "Go to Configuration",
+                "url" => "",
+                "sequent" => "199",
+                "expand" => "0",
+                "icon" => "flaticon-381-settings-2",
             ],
             [
-                'name'          => "Master",
-                'submenu'       => "",
-                'url'           => "/main/master",
-                'sequent'       => 201,
-                'icon'          => 'flaticon-381-list-1',
-                'created_by'    => 'Seeder',
-                'updated_by'    => 'Seeder',
-                'created_at'    => now(),
-                'updated_at'    => now()
+                "id" => 3,
+                "name" => "Dashboard",
+                "url" => "",
+                "sequent" => "101",
+                "expand" => "0",
+                "icon" => "gauge"
             ],
             [
-                'name'          => "Tenant",
-                'submenu'       => "",
-                'url'           => "/main/tenant",
-                'sequent'       => 202,
-                'icon'          => '',
-                'created_by'    => 'Seeder',
-                'updated_by'    => 'Seeder',
-                'created_at'    => now(),
-                'updated_at'    => now()
+                "id" => 4,
+                "name" => "Tenant",
+                "url" => "",
+                "sequent" => "202",
+                "expand" => "0",
+                "icon" => "fa-circle-chevron-right"
             ],
             [
-                'name'          => "Office",
-                'submenu'       => "",
-                'url'           => "/main/office",
-                'sequent'       => 203,
-                'icon'          => '',
-                'created_by'    => 'Seeder',
-                'updated_by'    => 'Seeder',
-                'created_at'    => now(),
-                'updated_at'    => now()
+                "id" => 5,
+                "name" => "Inventory",
+                "url" => "",
+                "sequent" => "203",
+                "expand" => "0",
+                "icon" => "fa-circle-chevron-right"
             ],
             [
-                'name'          => "Employee",
-                'submenu'       => "",
-                'url'           => "/main/employee",
-                'sequent'       => 204,
-                'icon'          => '',
-                'created_by'    => 'Seeder',
-                'updated_by'    => 'Seeder',
-                'created_at'    => now(),
-                'updated_at'    => now()
-            ],
+                "id" => 6,
+                "name" => "Pos",
+                "url" => "/main/pos",
+                "sequent" => "102",
+                "expand" => "0",
+                "icon" => "cash-register"
+            ]
         ];
 
         foreach ($menus as $menu) {

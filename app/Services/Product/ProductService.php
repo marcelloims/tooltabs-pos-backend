@@ -25,7 +25,7 @@ class ProductService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -44,7 +44,7 @@ class ProductService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -53,18 +53,15 @@ class ProductService
         }
     }
 
-    public function save($request){
-        $validator  = Validator::make($request->all(),[
+    public function save($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'category_id'   => 'required|max:255',
             'type_id'       => 'required|max:255',
             'pcode'         => 'required|max:255',
             'name'          => 'required|max:255',
             'description'   => 'required|max:255',
             'unit'          => 'required|max:255',
-            'hight_cm'      => 'required|max:255',
-            'width_cm'      => 'required|max:255',
-            'long_cm'       => 'required|max:255',
-            'tax'           => 'required|max:255',
             'status'        => 'required|max:255',
         ], [
             'category_id.required' => 'The category field is required',
@@ -88,7 +85,7 @@ class ProductService
                 "status"    => "success",
                 "message"   => "Data has been created"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -107,7 +104,7 @@ class ProductService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -116,19 +113,15 @@ class ProductService
         }
     }
 
-    public function update($request){
-        $validator  = Validator::make($request->all(),[
+    public function update($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'category_id'   => 'required|max:255',
             'type_id'       => 'required|max:255',
             'pcode'         => 'required|max:255',
             'name'          => 'required|max:255',
             'description'   => 'required|max:255',
             'unit'          => 'required|max:255',
-            'brand_code'    => 'required|max:255',
-            'hight_cm'      => 'required|max:255',
-            'width_cm'      => 'required|max:255',
-            'long_cm'       => 'required|max:255',
-            'tax'           => 'required|max:255',
             'status'        => 'required|max:255',
         ], [
             'category_id.required' => 'The category field is required',
@@ -152,7 +145,7 @@ class ProductService
                 "status"    => "success",
                 "message"   => "Data has been updated"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -171,7 +164,7 @@ class ProductService
                 "status"    => "success",
                 "message"   => "Your file has been deleted"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "process"   => "delete"
@@ -189,7 +182,7 @@ class ProductService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,

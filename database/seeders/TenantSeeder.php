@@ -14,11 +14,11 @@ class TenantSeeder extends Seeder
     public function run(): void
     {
         $tenant = [
-            'code'      => "MyOffice",
+            'code'      => "A-CS",
             'category'  => "Headquater",
-            'name'      => "Tooltabs",
-            'email'     => "marcelloimanuel25@gmail.com",
-            'phone'     => "081338339626",
+            'name'      => "Alas Coffee & Space",
+            'email'     => "alas@gmail.com",
+            'phone'     => "14045",
             'address'   => "Bali",
             'npwp_no'    => null
         ];

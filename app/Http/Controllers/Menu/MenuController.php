@@ -15,9 +15,9 @@ class MenuController extends Controller
         $this->menuService = $_menuService;
     }
 
-    public function getMenu($department_per_position_id)
+    public function getMenu(Request $request)
     {
-        $response   = $this->menuService->getMenu($department_per_position_id);
+        $response   = $this->menuService->getMenu($request);
 
         return response()->json($response);
     }
@@ -26,7 +26,7 @@ class MenuController extends Controller
     {
         $this->menuService->update($request);
 
-        $response   = $this->menuService->getMenu($request->department_per_position_id);
+        $response   = $this->menuService->getMenu($request);
 
         return response()->json($response, $response['code']);
     }

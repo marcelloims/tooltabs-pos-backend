@@ -15,8 +15,9 @@ class PositionSeeder extends Seeder
     {
         $position = [
             'tenant_id' => 1,
-            'code'      => "Admin",
-            'name'      => "Administrator",
+            'office_id' => 1,
+            'code'      => "OWNER",
+            'name'      => "Owner",
         ];
 
         Position::create($position);

@@ -25,7 +25,7 @@ class PositionService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -44,7 +44,7 @@ class PositionService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -53,8 +53,9 @@ class PositionService
         }
     }
 
-    public function save($request){
-        $validator  = Validator::make($request->all(),[
+    public function save($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'code'      => 'required|max:255',
             'name'      => 'required|max:255'
         ]);
@@ -67,7 +68,9 @@ class PositionService
             ];
         }
 
-        $response = $this->positionRepository->save($validator, $request->userEmail);
+        $dataFilter = ['tenant_id' => $request->userTenantId];
+
+        $response = $this->positionRepository->save($dataFilter, $validator, $request->userEmail);
 
         if ($response == true) {
             return [
@@ -75,7 +78,7 @@ class PositionService
                 "status"    => "success",
                 "message"   => "Data has been created"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -94,7 +97,7 @@ class PositionService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -103,8 +106,9 @@ class PositionService
         }
     }
 
-    public function update($request){
-        $validator  = Validator::make($request->all(),[
+    public function update($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'code'      => 'required|max:255',
             'name'      => 'required|max:255'
         ]);
@@ -117,7 +121,9 @@ class PositionService
             ];
         }
 
-        $response = $this->positionRepository->updated($validator, $request);
+        $dataFilter = ['tenant_id', $request->userTenantId];
+
+        $response = $this->positionRepository->updated($dataFilter, $validator, $request);
 
         if ($response == true) {
             return [
@@ -125,7 +131,7 @@ class PositionService
                 "status"    => "success",
                 "message"   => "Data has been updated"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -144,7 +150,7 @@ class PositionService
                 "status"    => "success",
                 "message"   => "Your file has been deleted"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "process"   => "delete"

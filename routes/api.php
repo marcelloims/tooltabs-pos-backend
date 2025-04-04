@@ -13,6 +13,7 @@ use App\Http\Controllers\Position\PositionController;
 use App\Http\Controllers\ProdcutPerOffice\ProductPerOfficeController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Type\TypeController;
+use App\Http\Controllers\UserMaster\UserMasterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +31,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'api'], function(){
+Route::group(['middleware' => 'api'], function () {
     Route::prefix('auth')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
@@ -40,7 +41,7 @@ Route::group(['middleware' => 'api'], function(){
 
 
     Route::prefix('menu')->group(function () {
-        Route::get('/fetch/{param}', [MenuController::class, 'getMenu']);
+        Route::get('/fetch', [MenuController::class, 'getMenu']);
         Route::put('/update', [MenuController::class, 'update']);
     });
 
@@ -49,7 +50,7 @@ Route::group(['middleware' => 'api'], function(){
         Route::get('/getAll', [OfficeController::class, 'getAll']);
         Route::post('/store', [OfficeController::class, 'store']);
         Route::get('/edit/{param}', [OfficeController::class, 'edit']);
-        Route::put('/update',[OfficeController::class, 'update']);
+        Route::put('/update', [OfficeController::class, 'update']);
         Route::get('/detail/{param}', [OfficeController::class, 'detail']);
         Route::delete('/delete/{param}', [OfficeController::class, 'destroy']);
     });
@@ -124,9 +125,18 @@ Route::group(['middleware' => 'api'], function(){
         Route::put('/update', [ProductPerOfficeController::class, 'update']);
         Route::delete('/delete/{param}', [ProductPerOfficeController::class, 'destroy']);
     });
-});
 
-Route::prefix('pos')->group(function () {
-    Route::post('/getFood', [PosContorller::class, 'getFood']);
-    Route::get('/getFood/{param}', [PosContorller::class, 'getDetailFood']);
+    Route::prefix('pos')->group(function () {
+        Route::post('/getFood', [PosContorller::class, 'getFood']);
+        Route::get('/getFood/{param}', [PosContorller::class, 'getDetailFood']);
+    });
+
+    Route::prefix('user_master')->group(function () {
+        Route::get('/getAll', [UserMasterController::class, 'getAll']);
+        Route::get('/fetch', [UserMasterController::class, 'fetch']);
+        Route::post('/store', [UserMasterController::class, 'store']);
+        Route::get('/edit/{param}', [UserMasterController::class, 'edit']);
+        Route::put('/update', [UserMasterController::class, 'update']);
+        Route::delete('/delete/{param}', [UserMasterController::class, 'destroy']);
+    });
 });

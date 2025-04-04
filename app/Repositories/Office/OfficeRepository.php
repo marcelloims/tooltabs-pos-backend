@@ -20,19 +20,19 @@ class OfficeRepository extends BaseRepositories
     {
         if ($id) {
             return Office::where('id', $id)->get();
-        }else{
+        } else {
             return Office::select('id', 'code')->get();
         }
     }
 
     public function fetch($request)
     {
-        $query = Office::select('id', $request->columns[0], $request->columns[1], $request->columns[2], $request->columns[3]);
+        $query = Office::where('tenant_id', $request->tenantId)->select('id', $request->columns[0], $request->columns[1], $request->columns[2], $request->columns[3]);
         if ($request->search) {
-          $query->where($request->columns[0], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[1], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[2], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[3], 'like', '%'.$request->search.'%');
+            $query->where($request->columns[0], 'like', '%' . $request->search . '%')
+                ->orWhere($request->columns[1], 'like', '%' . $request->search . '%')
+                ->orWhere($request->columns[2], 'like', '%' . $request->search . '%')
+                ->orWhere($request->columns[3], 'like', '%' . $request->search . '%');
         }
 
         if ($request->sorting) {
@@ -42,15 +42,20 @@ class OfficeRepository extends BaseRepositories
         return $query->paginate($request->perPage);
     }
 
-    public function save($validator, $userEmail){
-        $data = array_merge($validator->validated(), $this->baseService->auditableInsert($userEmail));
+    public function save($validator, $tenantid, $userEmail)
+    {
+        $data = array_merge($tenantid, $validator->validated(), $this->baseService->auditableInsert($userEmail));
 
         return BaseRepositories::store('offices', $data);
     }
 
     public function updated($validator, $request)
     {
-        $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
+        $data = array_merge(
+            ['tenant_id' => $request->userTenantId],
+            $validator->validated(),
+            $this->baseService->auditableUpdate($request->userEmail)
+        );
 
         return BaseRepositories::update('offices', $data, $request->id);
     }

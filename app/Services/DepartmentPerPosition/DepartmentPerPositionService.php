@@ -25,7 +25,7 @@ class DepartmentPerPositionService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -34,13 +34,14 @@ class DepartmentPerPositionService
         }
     }
 
-    public function save($request){
-        $validator  = Validator::make($request->all(),[
+    public function save($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'office_id'     => 'required|max:255',
             'department_id' => 'required|max:255',
             'position_id'   => 'required|max:255',
             'grade_id'      => 'required|max:255'
-        ],[
+        ], [
             'office_id.required' => 'The office field is required',
             'department_id.required' => 'The department field is required',
             'position_id.required' => 'The position field is required',
@@ -55,7 +56,9 @@ class DepartmentPerPositionService
             ];
         }
 
-        $response = $this->departmentPerPositionRepository->save($validator, $request->userEmail);
+        $dataFilter = ['tenant_id' => $request->userTenantId];
+
+        $response = $this->departmentPerPositionRepository->save($dataFilter, $validator, $request->userEmail);
 
         if ($response == true) {
             return [
@@ -63,7 +66,7 @@ class DepartmentPerPositionService
                 "status"    => "success",
                 "message"   => "Data has been created"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -82,7 +85,7 @@ class DepartmentPerPositionService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -93,7 +96,7 @@ class DepartmentPerPositionService
 
     public function update($request)
     {
-        $validator  = Validator::make($request->all(),[
+        $validator  = Validator::make($request->all(), [
             'office_id'     => 'required|max:255',
             'department_id' => 'required|max:255',
             'position_id'   => 'required|max:255',
@@ -116,7 +119,7 @@ class DepartmentPerPositionService
                 "status"    => "success",
                 "message"   => "Data has been updated"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -135,7 +138,7 @@ class DepartmentPerPositionService
                 "status"    => "success",
                 "message"   => "Your file has been deleted"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "process"   => "delete"
