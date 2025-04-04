@@ -14,9 +14,9 @@ class MenuService
         $this->menuRepository = $_menuRepository;
     }
 
-    public function getMenu($department_per_position_id)
+    public function getMenu($request)
     {
-        $response = $this->menuRepository->getMenu($department_per_position_id);
+        $response = $this->menuRepository->getMenu($request);
 
         if ($response == true) {
             return [
@@ -24,7 +24,7 @@ class MenuService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_OK,
                 "status"    => "success",

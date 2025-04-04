@@ -19,18 +19,18 @@ class DepartmentRepository extends BaseRepositories
     {
         if ($id) {
             return Department::where('id', $id)->get();
-        }else{
+        } else {
             return Department::select("id", "code", "name")
-            ->get();
+                ->get();
         }
     }
 
     public function fetch($request)
     {
-        $query = Department::select('id', $request->columns[0], $request->columns[1]);
+        $query = Department::where('tenant_id', $request->userOfficeId)->select('id', $request->columns[0], $request->columns[1]);
         if ($request->search) {
-          $query->where($request->columns[0], 'like', '%'.$request->search.'%')
-            ->orWhere($request->columns[1], 'like', '%'.$request->search.'%');
+            $query->where($request->columns[0], 'like', '%' . $request->search . '%')
+                ->orWhere($request->columns[1], 'like', '%' . $request->search . '%');
         }
 
         if ($request->sorting) {
@@ -40,15 +40,16 @@ class DepartmentRepository extends BaseRepositories
         return $query->paginate($request->perPage);
     }
 
-    public function save($validator, $userEmail){
-        $data = array_merge(['tenant_id' => 1], $validator->validated(), $this->baseService->auditableInsert($userEmail));
+    public function save($filterData, $validator, $userEmail)
+    {
+        $data = array_merge($filterData, $validator->validated(), $this->baseService->auditableInsert($userEmail));
 
         return BaseRepositories::store('departments', $data);
     }
 
-    public function updated($validator, $request)
+    public function updated($filterData, $validator, $request)
     {
-        $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
+        $data = array_merge($filterData, $validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
 
         return BaseRepositories::update('departments', $data, $request->id);
     }

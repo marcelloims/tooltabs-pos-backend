@@ -14,10 +14,11 @@ class OfficeSeeder extends Seeder
     public function run(): void
     {
         $office = [
-            'code'      => "TLS",
-            'name'      => "Tooltabs",
-            'email'     => "marcelloimanuel25@gmail.com",
-            'phone'     => "081338339626",
+            'tenant_id' => 1,
+            'code'      => "A-CS",
+            'name'      => "Alas Coffer & Space",
+            'email'     => "alas@gmail.com",
+            'phone'     => "14045",
             'address'   => "Bali",
             'npwp_no'    => null
         ];

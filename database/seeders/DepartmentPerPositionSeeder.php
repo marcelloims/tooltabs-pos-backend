@@ -14,6 +14,7 @@ class DepartmentPerPositionSeeder extends Seeder
     public function run(): void
     {
         $departmentPerPosition = [
+            'tenant_id'     => 1,
             'office_id'     => 1,
             'department_id' => 1,
             'position_id'   => 1,

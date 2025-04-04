@@ -6,7 +6,8 @@ use App\Repositories\Office\OfficeRepository;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class OfficeService {
+class OfficeService
+{
 
     protected $officeRepository;
 
@@ -25,7 +26,7 @@ class OfficeService {
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -44,7 +45,7 @@ class OfficeService {
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -53,8 +54,9 @@ class OfficeService {
         }
     }
 
-    public function save($request){
-        $validator  = Validator::make($request->all(),[
+    public function save($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'name'      => 'required|max:255',
             'code'      => 'required|max:255',
             'email'     => 'required|email|unique:users,email|max:255',
@@ -70,7 +72,7 @@ class OfficeService {
             ];
         }
 
-        $response = $this->officeRepository->save($validator, $request->userEmail);
+        $response = $this->officeRepository->save($validator, ['tenant_id' => $request->userTenantId], $request->userEmail);
 
         if ($response == true) {
             return [
@@ -78,7 +80,7 @@ class OfficeService {
                 "status"    => "success",
                 "message"   => "Data has been created"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -97,7 +99,7 @@ class OfficeService {
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -108,7 +110,7 @@ class OfficeService {
 
     public function update($request)
     {
-        $validator  = Validator::make($request->all(),[
+        $validator  = Validator::make($request->all(), [
             'name'      => 'required|max:255',
             'code'      => 'required|max:255',
             'email'     => 'required|email|unique:users,email|max:255',
@@ -132,7 +134,7 @@ class OfficeService {
                 "status"    => "success",
                 "message"   => "Data has been updated"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -151,7 +153,7 @@ class OfficeService {
                 "status"    => "success",
                 "message"   => "Your file has been deleted"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "process"   => "delete"

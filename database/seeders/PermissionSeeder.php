@@ -2,24 +2,25 @@
 
 namespace Database\Seeders;
 
-use App\Models\Department;
+use App\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DepartmentSeeder extends Seeder
+class PermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $department = [
+        $permission = [
             'tenant_id' => 1,
             'office_id' => 1,
-            'code'      => "ANG",
-            'name'      => "Administration & General",
+            'name'      => "Owner",
+            'write'     => 1,
+            'read'      => 0
         ];
 
-        Department::create($department);
+        Permission::create($permission);
     }
 }
