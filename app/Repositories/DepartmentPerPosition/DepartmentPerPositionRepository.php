@@ -48,6 +48,16 @@ class DepartmentPerPositionRepository extends BaseRepositories
         return $query->paginate($request->perPage);
     }
 
+    public function getAll($request)
+    {
+        return DepartmentPerPosition::join('departments', 'department_per_positions.department_id', '=', 'departments.id')
+            ->join('offices', 'department_per_positions.office_id', '=', 'offices.id')
+            ->join('positions', 'department_per_positions.position_id', '=', 'positions.id')
+            ->where('department_per_positions.tenant_id',  $request->userTenantId)
+            ->select('department_per_positions.id', 'departments.code as department_code', 'offices.name as office_name', 'positions.code as position_code')
+            ->get();
+    }
+
     public function save($dataFilter, $validator, $userEmail)
     {
         $data = array_merge($dataFilter, $validator->validated(), $this->baseService->auditableInsert($userEmail));

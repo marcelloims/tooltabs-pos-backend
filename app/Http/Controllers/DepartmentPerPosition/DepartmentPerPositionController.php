@@ -22,6 +22,13 @@ class DepartmentPerPositionController extends Controller
         return response()->json($response, $response['code']);
     }
 
+    public function getAll(Request $request)
+    {
+        $response   = $this->departmentPerPositionService->getAll($request);
+
+        return response()->json($response, $response['code']);
+    }
+
     public function store(Request $request)
     {
         $response   = $this->departmentPerPositionService->save($request);

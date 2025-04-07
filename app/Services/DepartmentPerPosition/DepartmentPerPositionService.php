@@ -34,6 +34,25 @@ class DepartmentPerPositionService
         }
     }
 
+    public function getAll($request)
+    {
+        $response   = $this->departmentPerPositionRepository->getAll($request);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        } else {
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
     public function save($request)
     {
         $validator  = Validator::make($request->all(), [

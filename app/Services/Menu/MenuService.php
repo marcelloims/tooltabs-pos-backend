@@ -33,6 +33,25 @@ class MenuService
         }
     }
 
+    public function getAll($request)
+    {
+        $response = $this->menuRepository->getAll($request);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        } else {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => "No Data"
+            ];
+        }
+    }
+
     public function update($request)
     {
         return $this->menuRepository->updated($request);
