@@ -154,4 +154,13 @@ class PermissionPerMenuRepository extends BaseRepositories
 
         return true;
     }
+
+    public function destroyed($id)
+    {
+        Permission::where('id', $id)->delete();
+
+        PermissionPerMenu::where('permission_id', $id)->delete();
+
+        return true;
+    }
 }

@@ -56,4 +56,11 @@ class AccessRoleController extends Controller
 
         return response()->json($response, $response['code']);
     }
+
+    public function destroy($id)
+    {
+        $response   = $this->permissionPerMenuService->destroy($id);
+
+        return response()->json($response, $response['code']);
+    }
 }

@@ -183,4 +183,22 @@ class PermissionPerMenuService
             ];
         }
     }
+
+    public function destroy($id)
+    {
+        $response = $this->permissionPerMenuRepository->destroyed($id);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "message"   => "Your file has been deleted"
+            ];
+        } else {
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "process"   => "delete"
+            ];
+        }
+    }
 }
