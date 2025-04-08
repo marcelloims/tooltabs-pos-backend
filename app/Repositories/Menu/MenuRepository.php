@@ -23,6 +23,12 @@ class MenuRepository extends BaseRepositories
             ->get();
     }
 
+    public function getAll($request)
+    {
+        return Menu::with('submenus')
+            ->get();
+    }
+
     public function updated($request)
     {
         if ($request->menuId > 0) {

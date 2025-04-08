@@ -42,6 +42,7 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::prefix('menu')->group(function () {
         Route::get('/fetch', [MenuController::class, 'getMenu']);
+        Route::get('/getAll', [MenuController::class, 'getAll']);
         Route::put('/update', [MenuController::class, 'update']);
     });
 
@@ -57,6 +58,12 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::prefix('access_role')->group(function () {
         Route::get('/permission_per_menu/{param}', [AccessRoleController::class, 'permission_per_menu']);
+        Route::get('/fetch', [AccessRoleController::class, 'fetch']);
+        Route::post('/store', [AccessRoleController::class, 'store']);
+        Route::get('/edit/{param}', [AccessRoleController::class, 'edit']);
+        Route::get('/get_selected_menu/{param}', [AccessRoleController::class, 'getSelectedMenu']);
+        Route::put('/update', [AccessRoleController::class, 'update']);
+        Route::delete('/delete/{param}', [AccessRoleController::class, 'destroy']);
     });
 
     Route::prefix('department')->group(function () {
@@ -83,6 +90,7 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::prefix('department_per_position')->group(function () {
         Route::get('/fetch', [DepartmentPerPositionController::class, 'fetch']);
+        Route::get('/getAll', [DepartmentPerPositionController::class, 'getAll']);
         Route::post('/store', [DepartmentPerPositionController::class, 'store']);
         Route::get('/edit/{param}', [DepartmentPerPositionController::class, 'edit']);
         Route::put('/update', [DepartmentPerPositionController::class, 'update']);
