@@ -109,4 +109,78 @@ class PermissionPerMenuService
             ];
         }
     }
+
+    public function edit($id)
+    {
+        $response   = $this->permissionPerMenuRepository->edit($id);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        } else {
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
+    public function getSelectedMenu($id)
+    {
+        $response   = $this->permissionPerMenuRepository->getSelectedMenu($id);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        } else {
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
+    public function updated($request)
+    {
+        $validator  = Validator::make($request->all(), [
+            'department_per_position_id'    => 'required|max:255',
+            'name'                          => 'required|max:255',
+            'office_id'                     => 'required|max:255',
+            'selectCase'                    => 'required|max:255'
+        ], [
+            'department_per_position_id.required' => "field is required"
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => $validator->errors(),
+                "process"   => "validation"
+            ];
+        }
+
+        $response = $this->permissionPerMenuRepository->updated($request);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_ACCEPTED,
+                "status"    => "success",
+                "message"   => "Data has been updated"
+            ];
+        } else {
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => $validator->errors(),
+                "process"   => "update"
+            ];
+        }
+    }
 }

@@ -95,11 +95,63 @@ class PermissionPerMenuRepository extends BaseRepositories
         return true;
     }
 
+    public function edit($id)
+    {
+        return Permission::where('id', $id)->first();
+    }
+
+    public function getSelectedMenu($id)
+    {
+        return PermissionPerMenu::where('permission_id', $id)
+            ->select('menu_id')
+            ->get();
+    }
+
     public function formatCaseColumn($text)
     {
         $dataExplodes = explode(" ", $text);
         $result = join("_", $dataExplodes);
 
         return $result;
+    }
+
+    public function updated($request)
+    {
+        $permission = [];
+        if ($request->selectCase == "write") {
+            $permission =  [
+                'tenant_id'                     => $request->userTenantId,
+                'office_id'                     => $request->office_id,
+                'name'                          => $request->name,
+                'department_per_position_id'    => $request->department_per_position_id,
+                'write'                         => 1,
+                'read'                          => 0
+            ];
+        } else {
+            $permission =  [
+                'tenant_id'                     => $request->userTenantId,
+                'office_id'                     => $request->office_id,
+                'name'                          => $request->name,
+                'department_per_position_id'    => $request->department_per_position_id,
+                'write'                         => 0,
+                'read'                          => 1
+            ];
+        }
+
+
+        Permission::where('id', $request->id)->update(array_merge($permission, $this->baseService->audiTableUpdate($request->email)));
+
+        PermissionPerMenu::where('permission_id', $request->id)->delete();
+
+        foreach ($request->checkedList as $value) {
+            $permissionMenu = [
+                'permission_id' => $request->id,
+                'menu_id'       => $value
+            ];
+
+            PermissionPerMenu::insert(array_merge($permissionMenu, $this->baseService->audiTableInsert($request->email)));
+        }
+
+        return true;
     }
 }

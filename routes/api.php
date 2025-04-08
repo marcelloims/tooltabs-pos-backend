@@ -61,6 +61,7 @@ Route::group(['middleware' => 'api'], function () {
         Route::get('/fetch', [AccessRoleController::class, 'fetch']);
         Route::post('/store', [AccessRoleController::class, 'store']);
         Route::get('/edit/{param}', [AccessRoleController::class, 'edit']);
+        Route::get('/get_selected_menu/{param}', [AccessRoleController::class, 'getSelectedMenu']);
         Route::put('/update', [AccessRoleController::class, 'update']);
         Route::delete('/delete/{param}', [AccessRoleController::class, 'destroy']);
     });

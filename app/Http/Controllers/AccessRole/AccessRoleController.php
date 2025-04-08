@@ -35,4 +35,25 @@ class AccessRoleController extends Controller
 
         return response()->json($response, $response['code']);
     }
+
+    public function edit($id)
+    {
+        $response   = $this->permissionPerMenuService->edit($id);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function getSelectedMenu($id)
+    {
+        $response   = $this->permissionPerMenuService->getSelectedMenu($id);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function update(Request $request)
+    {
+        $response   = $this->permissionPerMenuService->updated($request);
+
+        return response()->json($response, $response['code']);
+    }
 }
