@@ -19,9 +19,9 @@ class TypeRepository extends BaseRepositories
     {
         if ($id) {
             return Type::where('id', $id)->get();
-        }else{
+        } else {
             return Type::select("id", "name")
-            ->get();
+                ->get();
         }
     }
 
@@ -29,7 +29,7 @@ class TypeRepository extends BaseRepositories
     {
         $query = Type::select('id', $request->columns[0]);
         if ($request->search) {
-          $query->where($request->columns[0], 'like', '%'.$request->search.'%');
+            $query->where($request->columns[0], 'like', '%' . $request->search . '%');
         }
 
         if ($request->sorting) {
@@ -39,15 +39,16 @@ class TypeRepository extends BaseRepositories
         return $query->paginate($request->perPage);
     }
 
-    public function save($validator, $userEmail){
-        $data = array_merge($validator->validated(), $this->baseService->auditableInsert($userEmail));
+    public function save($validator, $request)
+    {
+        $data = array_merge($validator->validated(), ['tenant_id' => $request->userTenantId], $this->baseService->auditableInsert($request->userEmail));
 
         return BaseRepositories::store('types', $data);
     }
 
     public function updated($validator, $request)
     {
-        $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
+        $data = array_merge($validator->validated(), ['tenant_id' => $request->userTenantId],  $this->baseService->auditableUpdate($request->userEmail));
 
         return BaseRepositories::update('types', $data, $request->id);
     }

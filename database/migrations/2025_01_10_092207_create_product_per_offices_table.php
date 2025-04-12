@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('office_id');
             $table->integer('price');
-            $table->integer('service_charge_(%)');
-            $table->integer('commission_(%)');
+            $table->integer('service_charge_(%)')->nullable();
+            $table->integer('commission_(%)')->nullable();
             $table->integer('account_no')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

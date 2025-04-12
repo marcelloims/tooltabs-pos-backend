@@ -22,6 +22,20 @@ class PosContorller extends Controller
         return response()->json($response, $response['code']);
     }
 
+    public function searchFood(Request $request)
+    {
+        $response   = $this->posService->searchFood($request);
+
+        return response()->json($response, $response['code']);
+    }
+
+    public function getCategory(Request $request)
+    {
+        $response   = $this->posService->getCategory($request);
+
+        return response()->json($response, $response['code']);
+    }
+
     public function getDetailFood($id)
     {
         $response   = $this->posService->getDetailFood($id);

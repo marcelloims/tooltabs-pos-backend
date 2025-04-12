@@ -25,7 +25,7 @@ class ProductPerOfficeService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -34,18 +34,16 @@ class ProductPerOfficeService
         }
     }
 
-    public function save($request){
-        $validator  = Validator::make($request->all(),[
+    public function save($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'office_id'         => 'required|max:255',
             'product_id'        => 'required|max:255',
             'price'             => 'required|max:255',
-            'service_charge'    => 'required|max:255',
-            'commission'        => 'required|max:255',
             'status'            => 'required|max:255'
         ], [
             'office_id.required' => 'The office field is required',
             'product_id.required' => 'The product field is required',
-            'service_charge.required' => 'The service charge field is required',
         ]);
 
         if ($validator->fails()) {
@@ -64,7 +62,7 @@ class ProductPerOfficeService
                 "status"    => "success",
                 "message"   => "Data has been created"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -95,7 +93,7 @@ class ProductPerOfficeService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -106,17 +104,14 @@ class ProductPerOfficeService
 
     public function update($request)
     {
-        $validator  = Validator::make($request->all(),[
+        $validator  = Validator::make($request->all(), [
             'office_id'         => 'required|max:255',
             'product_id'        => 'required|max:255',
             'price'             => 'required|max:255',
-            'service_charge'    => 'required|max:255',
-            'commission'        => 'required|max:255',
             'status'            => 'required|max:255'
         ], [
             'office_id.required' => 'The office field is required',
             'product_id.required' => 'The product field is required',
-            'service_charge.required' => 'The service charge field is required',
         ]);
 
         if ($validator->fails()) {
@@ -135,7 +130,7 @@ class ProductPerOfficeService
                 "status"    => "success",
                 "message"   => "Data has been updated"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -154,7 +149,7 @@ class ProductPerOfficeService
                 "status"    => "success",
                 "message"   => "Your file has been deleted"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "process"   => "delete"

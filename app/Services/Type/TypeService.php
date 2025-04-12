@@ -25,7 +25,7 @@ class TypeService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -44,7 +44,7 @@ class TypeService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -53,8 +53,9 @@ class TypeService
         }
     }
 
-    public function save($request){
-        $validator  = Validator::make($request->all(),[
+    public function save($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'name'      => 'required|max:255'
         ]);
 
@@ -66,7 +67,7 @@ class TypeService
             ];
         }
 
-        $response = $this->typeRepository->save($validator, $request->userEmail);
+        $response = $this->typeRepository->save($validator, $request);
 
         if ($response == true) {
             return [
@@ -74,7 +75,7 @@ class TypeService
                 "status"    => "success",
                 "message"   => "Data has been created"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -93,7 +94,7 @@ class TypeService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -102,8 +103,9 @@ class TypeService
         }
     }
 
-    public function update($request){
-        $validator  = Validator::make($request->all(),[
+    public function update($request)
+    {
+        $validator  = Validator::make($request->all(), [
             'name'      => 'required|max:255'
         ]);
 
@@ -123,7 +125,7 @@ class TypeService
                 "status"    => "success",
                 "message"   => "Data has been updated"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => $validator->errors(),
@@ -142,7 +144,7 @@ class TypeService
                 "status"    => "success",
                 "message"   => "Your file has been deleted"
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "process"   => "delete"

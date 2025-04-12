@@ -60,13 +60,11 @@ class ProductService
             'type_id'       => 'required|max:255',
             'pcode'         => 'required|max:255',
             'name'          => 'required|max:255',
-            'description'   => 'required|max:255',
             'unit'          => 'required|max:255',
             'status'        => 'required|max:255',
         ], [
             'category_id.required' => 'The category field is required',
             'type_id.required' => 'The type field is required',
-            'brand_code.required' => 'The brand code field is required',
         ]);
 
         if ($validator->fails()) {
@@ -120,13 +118,11 @@ class ProductService
             'type_id'       => 'required|max:255',
             'pcode'         => 'required|max:255',
             'name'          => 'required|max:255',
-            'description'   => 'required|max:255',
             'unit'          => 'required|max:255',
             'status'        => 'required|max:255',
         ], [
             'category_id.required' => 'The category field is required',
             'type_id.required' => 'The type field is required',
-            'brand_code.required' => 'The brand code field is required',
         ]);
 
         if ($validator->fails()) {

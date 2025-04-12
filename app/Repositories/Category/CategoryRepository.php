@@ -39,16 +39,16 @@ class CategoryRepository extends BaseRepositories
         return $query->paginate($request->perPage);
     }
 
-    public function save($validator, $userEmail)
+    public function save($validator, $request)
     {
-        $data = array_merge($validator->validated(), $this->baseService->auditableInsert($userEmail));
+        $data = array_merge($validator->validated(), ['tenant_id' => $request->userTenantId], $this->baseService->auditableInsert($request->userEmail));
 
         return BaseRepositories::store('categories', $data);
     }
 
     public function updated($validator, $request)
     {
-        $data = array_merge($validator->validated(), $this->baseService->auditableUpdate($request->userEmail));
+        $data = array_merge($validator->validated(), ['tenant_id' => $request->userTenantId], $this->baseService->auditableUpdate($request->userEmail));
 
         return BaseRepositories::update('categories', $data, $request->id);
     }

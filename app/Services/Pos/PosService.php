@@ -24,7 +24,45 @@ class PosService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
+    public function searchFood($request)
+    {
+        $response   = $this->posRepository->searchFood($request);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        } else {
+            return [
+                "code"      => Response::HTTP_BAD_REQUEST,
+                "request"   => false,
+                "process"   => "fetch"
+            ];
+        }
+    }
+
+    public function getCategory($request)
+    {
+        $response   = $this->posRepository->getCategory($request);
+
+        if ($response == true) {
+            return [
+                "code"      => Response::HTTP_OK,
+                "status"    => "success",
+                "response"  => $response
+            ];
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,
@@ -43,7 +81,7 @@ class PosService
                 "status"    => "success",
                 "response"  => $response
             ];
-        }else{
+        } else {
             return [
                 "code"      => Response::HTTP_BAD_REQUEST,
                 "request"   => false,

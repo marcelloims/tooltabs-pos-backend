@@ -136,6 +136,8 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::prefix('pos')->group(function () {
         Route::post('/getFood', [PosContorller::class, 'getFood']);
+        Route::post('/searchFood', [PosContorller::class, 'searchFood']);
+        Route::get('/getCategory', [PosContorller::class, 'getCategory']);
         Route::get('/getFood/{param}', [PosContorller::class, 'getDetailFood']);
     });
 
